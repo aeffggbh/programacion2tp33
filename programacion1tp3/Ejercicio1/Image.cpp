@@ -18,24 +18,14 @@ void Image::FillImage(const char* imageData)
 {
 	int currentChar = 0;
 
-	for (int y = 0; y < actualHeight; y++)
+	for (int i = 0; i < actualHeight * actualWidth; i++)
 	{
-		for (int x = 0; x < actualWidth; x++)
+		if (imageData[currentChar] != '\0' && imageData[currentChar] != ' ')
 		{
-			if (imageData[currentChar] != '\0')
-			{
-				image[y][x] = imageData[currentChar];
-				currentChar++;
-			}
-			else
-			{
-				delete imageData;
-				return;
-			}
+			image[i] = imageData[currentChar];
+			currentChar++;
 		}
 	}
-
-	delete imageData;
 }
 
 void Image::Draw()
@@ -46,14 +36,19 @@ void Image::Draw()
 	int currentX = 1;
 	int currentY = 1;
 
+	int currentChar = 0;
+	int spacesToAdd = 0;
+
 	for (int y = 0; y < actualHeight; y++)
 	{
 		goToCoordinates(currentX, currentY);
 
 		for (int x = 0; x < actualWidth; x++)
 		{
-			cout << image[y][x];
-			currentX++;
+			cout << image[currentChar];
+			if (image[currentChar] != ' ')
+				currentX++;
+			goToCoordinates(currentX, currentY);
 		}
 		currentY++;
 		currentX = 1;

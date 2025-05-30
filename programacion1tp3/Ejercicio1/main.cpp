@@ -25,21 +25,20 @@ char* GetData(string path, int actualWidth, int actualHeight);
 
 int main()
 {
-	int topSize = 40;
-	Image* amogusImage = loadImage(topSize, topSize/2, "amogus", "amogus.txt");
-	Image* awesomeImage = loadImage(topSize, topSize/2, "awesome", "awesome.txt");
-	Image* catImage = loadImage(topSize, topSize / 2, "cat", "cat.txt");
-	Image* heartImage = loadImage(topSize, topSize / 2, "heart", "heart.txt");
-	Image* kuromiImage = loadImage(topSize, topSize / 2, "kuromi", "kuromi.txt");
-	Image* OuOImage = loadImage(topSize, topSize / 2, "OuO", "OuO.txt");
-	Image* pizzaImage = loadImage(topSize, topSize / 2, "pizza", "pizza.txt");
-	Image* skellettonImage = loadImage(topSize, topSize / 2, "skelletton", "skelletton.txt");
-	Image* snailImage = loadImage(topSize, topSize / 2, "snail", "snail.txt");
-	Image* uwuImage = loadImage(topSize, topSize / 2, "uwu", "uwu.txt");
+	Image* amogusImage = loadImage(30, 17, "amogus", "amogus.txt");
+	Image* awesomeImage = loadImage(29, 17, "awesome", "awesome.txt");
+	Image* catImage = loadImage(30, 17, "cat", "cat.txt");
+	Image* heartImage = loadImage(33, 17, "heart", "heart.txt");
+	Image* kuromiImage = loadImage(33, 19, "kuromi", "kuromi.txt");
+	Image* OuOImage = loadImage(33, 6, "OuO", "OuO.txt");
+	Image* pizzaImage = loadImage(30, 13, "pizza", "pizza.txt");
+	Image* skellettonImage = loadImage(33, 17, "skelletton", "skelletton.txt");
+	Image* snailImage = loadImage(33, 8, "snail", "snail.txt");
+	Image* uwuImage = loadImage(30, 9, "uwu", "uwu.txt");
 
 	const int maxImages = 10;
 	Image* images[maxImages] =
-	{	
+	{
 		amogusImage,
 		awesomeImage,
 		catImage,
@@ -49,7 +48,7 @@ int main()
 		pizzaImage,
 		skellettonImage,
 		snailImage,
-		uwuImage 
+		uwuImage
 	};
 
 	int currentImageIndex = 0;
@@ -74,7 +73,9 @@ int main()
 
 	} while (!IsOver());
 
-	delete[] images;
+	for (int i = 0; i < maxImages; i++) {
+		delete images[i];
+	}
 }
 
 bool IsOver()
@@ -86,7 +87,10 @@ Image* loadImage(int actualWidth, int actualHeight, string description, string p
 {
 	char* imageData = GetData(path, actualWidth, actualHeight);
 
-	return new Image(imageData, description, actualWidth, actualHeight);
+	Image* myImage = new Image(imageData, description, actualWidth, actualHeight);
+
+	delete[] imageData; 
+	return myImage;
 }
 
 //string GetDataAsString(string path)
@@ -110,11 +114,6 @@ char* GetData(string path, int actualWidth, int actualHeight)
 {
 	int size = actualWidth * actualHeight;
 	char* image = new char[size];
-
-	for (int i = 0; i < size; i++)
-	{
-		image[i] = '\0';
-	}
 
 	ifstream inputStream = ifstream();
 	inputStream.open(path);

@@ -7,7 +7,7 @@ private:
 	static const int MAX_IMAGE_LENGTH = 200;
 	int actualWidth;
 	int actualHeight;
-	char image[MAX_IMAGE_LENGTH][MAX_IMAGE_LENGTH];
+	char image[MAX_IMAGE_LENGTH];
 	string description;
 
 public:
