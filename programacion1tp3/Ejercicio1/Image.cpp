@@ -1,12 +1,12 @@
 #include "Image.h"
 #include "AwesomeLibrary.h"
 
-Image::Image(char* imageData, string description, int actualWidth, int actualHeight)
+Image::Image(const char* imageData, string description, int actualWidth, int actualHeight)
 {
-	FillImage(imageData);
-	this->description = description;
 	this->actualHeight = actualHeight;
 	this->actualWidth = actualWidth;
+	this->description = description;
+	FillImage(imageData);
 }
 
 Image::~Image()
@@ -14,13 +14,13 @@ Image::~Image()
 
 }
 
-void Image::FillImage(char* imageData)
+void Image::FillImage(const char* imageData)
 {
 	int currentChar = 0;
 
-	for (int y = 0; y < MAX_IMAGE_LENGTH; y++)
+	for (int y = 0; y < actualHeight; y++)
 	{
-		for (int x = 0; x < MAX_IMAGE_LENGTH; x++)
+		for (int x = 0; x < actualWidth; x++)
 		{
 			if (imageData[currentChar] != '\0')
 			{
@@ -34,6 +34,8 @@ void Image::FillImage(char* imageData)
 			}
 		}
 	}
+
+	delete imageData;
 }
 
 void Image::Draw()
@@ -54,10 +56,12 @@ void Image::Draw()
 			currentX++;
 		}
 		currentY++;
+		currentX = 1;
 	}
 
-	currentY += 3;
+	currentY += 5;
 	currentX = 0;
+	goToCoordinates(currentX, currentY);
 
 	cout << description << endl << endl;
 }

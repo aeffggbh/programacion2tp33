@@ -11,9 +11,9 @@ private:
 	string description;
 
 public:
-	Image(char* imageData, string description, int actualWidth, int actualHeight);
+	Image(const char* imageData, string description, int actualWidth, int actualHeight);
 	~Image();
-	void FillImage(char* imageData);
+	void FillImage(const char* imageData);
 	void Draw();
 };
 

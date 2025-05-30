@@ -113,8 +113,8 @@ void goToCoordinates (int x, int y)
 	HANDLE outputHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD coord;
 	
-	coord.X = x - 1;
-	coord.Y = y - 1;
+	coord.X = x;
+	coord.Y = y;
 	
 	SetConsoleCursorPosition(outputHandle, coord);
 }

@@ -13,50 +13,68 @@ personaje, objeto, animal o demás representado en la imagen.
 ● Si se llega al final del arreglo, hacer que se realice un loop.
 ● Se debe poder salir del programa al presionar escape.
 */
-#include <iostream>
 #include <fstream>
+#include <string>
 #include "AwesomeLibrary.h"
 #include "Image.h"
-using namespace std;
 
 bool IsOver();
 Image* loadImage(int actualWidth, int actualHeight, string description, string path);
-char* loadImage(string path, int actualWidth, int actualHeight);
+char* GetData(string path, int actualWidth, int actualHeight);
+//string GetDataAsString(string path);
 
 int main()
 {
+	int topSize = 40;
+	Image* amogusImage = loadImage(topSize, topSize/2, "amogus", "amogus.txt");
+	Image* awesomeImage = loadImage(topSize, topSize/2, "awesome", "awesome.txt");
+	Image* catImage = loadImage(topSize, topSize / 2, "cat", "cat.txt");
+	Image* heartImage = loadImage(topSize, topSize / 2, "heart", "heart.txt");
+	Image* kuromiImage = loadImage(topSize, topSize / 2, "kuromi", "kuromi.txt");
+	Image* OuOImage = loadImage(topSize, topSize / 2, "OuO", "OuO.txt");
+	Image* pizzaImage = loadImage(topSize, topSize / 2, "pizza", "pizza.txt");
+	Image* skellettonImage = loadImage(topSize, topSize / 2, "skelletton", "skelletton.txt");
+	Image* snailImage = loadImage(topSize, topSize / 2, "snail", "snail.txt");
+	Image* uwuImage = loadImage(topSize, topSize / 2, "uwu", "uwu.txt");
+
+	const int maxImages = 10;
+	Image* images[maxImages] =
+	{	
+		amogusImage,
+		awesomeImage,
+		catImage,
+		heartImage,
+		kuromiImage,
+		OuOImage,
+		pizzaImage,
+		skellettonImage,
+		snailImage,
+		uwuImage 
+	};
+
+	int currentImageIndex = 0;
+
 	do
 	{
-		Image* amogusImage = loadImage(27, 12, "amogus", "amogus.txt");
-		Image* awesomeImage = loadImage(39, 3, "awesome", "awesome.txt");
-		Image* catImage = loadImage(22, 10, "cat", "cat.txt");
-		Image* heartImage = loadImage(22, 15, "heart", "heart.txt");
-		Image* kuromiImage = loadImage(20, 9, "kuromi", "kuromi.txt");
-		Image* OuOImage = loadImage(31, 11, "OuO", "OuO.txt");
-		Image* pizzaImage = loadImage(32, 15, "pizza", "pizza.txt");
-		Image* skellettonImage = loadImage(22, 14, "skelletton", "skelletton.txt");
-		Image* snailImage = loadImage(30, 11, "snail", "snail.txt");
-		Image* uwuImage = loadImage(30, 5, "uwu", "uwu.txt");
+		images[currentImageIndex]->Draw();
 
-		delete amogusImage;
-		delete awesomeImage;
-		delete catImage;
-		delete heartImage;
-		delete kuromiImage;
-		delete OuOImage;
-		delete pizzaImage;
-		delete skellettonImage;
-		delete snailImage;
-		delete uwuImage;
-		//LEER 10 ARCHIVOS, CARGARLOS EN UN CHAR* 
+		int key = getKey(true);
 
-
-
+		if (key == KEY_ENTER)
+		{
+			currentImageIndex++;
+			if (currentImageIndex == maxImages)
+			{
+				currentImageIndex = 0;
+			}
+			clearScreen();
+		}
 
 		//IMAGENES CAMBIAN CON LA TECLA ENTER. MARCO AL REDEDOR. QUE DIGA QUE ES ABAJO	(cat, uwu)
 
-
 	} while (!IsOver());
+
+	delete[] images;
 }
 
 bool IsOver()
@@ -66,21 +84,43 @@ bool IsOver()
 
 Image* loadImage(int actualWidth, int actualHeight, string description, string path)
 {
-	char* imageData = loadImage(path, actualWidth, actualHeight);
-	Image* image = new Image(imageData, description, actualWidth, actualHeight);
+	char* imageData = GetData(path, actualWidth, actualHeight);
 
-	return image;
+	return new Image(imageData, description, actualWidth, actualHeight);
 }
 
-char* loadImage(string path, int actualWidth, int actualHeight)
+//string GetDataAsString(string path)
+//{
+//	ifstream inputStream(path);
+//	if (!inputStream.is_open()) {
+//		cerr << "Error: Could not open file " << path << endl;
+//		return "";
+//	}
+//
+//	string content;
+//	string line;
+//	while (getline(inputStream, line)) 
+//		content += line + "\n";
+//
+//	inputStream.close();
+//	return content;
+//}
+
+char* GetData(string path, int actualWidth, int actualHeight)
 {
-	char* image = new char[actualWidth * actualHeight];
+	int size = actualWidth * actualHeight;
+	char* image = new char[size];
+
+	for (int i = 0; i < size; i++)
+	{
+		image[i] = '\0';
+	}
 
 	ifstream inputStream = ifstream();
-	inputStream.open(path, ios::in | ios::binary);
+	inputStream.open(path);
 
 	if (inputStream.good())
-		inputStream.read(image, sizeof(image));
+		inputStream.read(image, size);
 
 	if (inputStream.is_open())
 		inputStream.close();
