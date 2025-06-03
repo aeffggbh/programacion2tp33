@@ -20,7 +20,7 @@ personaje, objeto, animal o demás representado en la imagen.
 
 bool IsOver();
 Image* loadImage(int actualWidth, int actualHeight, string description, string path);
-char* GetData(string path, int actualWidth, int actualHeight);
+string GetData(string path);
 //string GetDataAsString(string path);
 
 int main()
@@ -66,7 +66,7 @@ int main()
 			{
 				currentImageIndex = 0;
 			}
-			clearScreen();
+			//clearScreen();
 		}
 
 		//IMAGENES CAMBIAN CON LA TECLA ENTER. MARCO AL REDEDOR. QUE DIGA QUE ES ABAJO	(cat, uwu)
@@ -76,6 +76,7 @@ int main()
 	for (int i = 0; i < maxImages; i++) {
 		delete images[i];
 	}
+
 }
 
 bool IsOver()
@@ -85,11 +86,10 @@ bool IsOver()
 
 Image* loadImage(int actualWidth, int actualHeight, string description, string path)
 {
-	char* imageData = GetData(path, actualWidth, actualHeight);
+	string imageData = GetData(path);
 
-	Image* myImage = new Image(imageData, description, actualWidth, actualHeight);
+	Image* myImage = new Image(imageData.c_str(), description, actualWidth, actualHeight);
 
-	delete[] imageData; 
 	return myImage;
 }
 
@@ -110,10 +110,10 @@ Image* loadImage(int actualWidth, int actualHeight, string description, string p
 //	return content;
 //}
 
-char* GetData(string path, int actualWidth, int actualHeight)
+string GetData(string path)
 {
-	int size = actualWidth * actualHeight;
-	char* image = new char[size];
+	/*int size = actualWidth * actualHeight;
+	string image = new char[size];
 
 	ifstream inputStream = ifstream();
 	inputStream.open(path);
@@ -124,5 +124,43 @@ char* GetData(string path, int actualWidth, int actualHeight)
 	if (inputStream.is_open())
 		inputStream.close();
 
-	return image;
+	return image;*/
+
+	string text;
+
+	ifstream inputStream = ifstream();
+
+	try
+	{
+		inputStream.open(path);
+
+		if (!inputStream.is_open())
+			throw ifstream::failure("the file could not be opened");
+
+		while (!inputStream.eof())
+		{
+			string addText;
+
+			inputStream >> addText;
+			//cout << addText;
+
+			text += addText + " ";
+		}
+
+		if (inputStream.fail())
+			throw ifstream::failure("file could not be read");
+
+		inputStream.close();
+	}
+	catch (ifstream::failure& error)
+	{
+		cerr << "Error loading text: " << error.what() << endl;
+
+		if (inputStream.is_open())
+			inputStream.close();
+	}
+
+	//system("pause");
+
+	return text;
 }

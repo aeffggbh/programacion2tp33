@@ -4,7 +4,7 @@ using namespace std;
 class Image
 {
 private:
-	static const int MAX_IMAGE_LENGTH = 200;
+	static const int MAX_IMAGE_LENGTH = 700;
 	int actualWidth;
 	int actualHeight;
 	char image[MAX_IMAGE_LENGTH];
