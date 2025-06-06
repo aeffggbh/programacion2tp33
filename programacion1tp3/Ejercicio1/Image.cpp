@@ -69,9 +69,7 @@ void Image::CalculateDimensions(int actualSize)
 			height++;
 		}
 		else if (image[i] == 'X')
-		{
 			break;
-		}
 	}
 
 	actualHeight = height;
@@ -82,10 +80,13 @@ void Image::CalculateDimensions(int actualSize)
 void Image::Draw()
 {
 	clearScreen();
-	drawFrame(0, 0, actualWidth + 2, actualHeight + 2);
+	drawFrame(0, 0, actualWidth + 2, actualHeight + 1);
 
-	int currentX = 1;
-	int currentY = 1;
+	int offSetX = 2;
+	int offSetY = 1;
+
+	int currentX = offSetX;
+	int currentY = offSetY;
 
 	int currentChar = 0;
 	int spacesToAdd = 0;
@@ -100,13 +101,14 @@ void Image::Draw()
 				goToCoordinates(currentX, currentY);
 				cout << image[currentChar];
 				currentX++;
-				currentChar++;
 
 				if (image[currentChar] == ' ')
 				{
 					currentY++;
-					currentX = 1;
+					currentX = offSetX;
 				}
+
+				currentChar++;
 			}
 			else
 				break;
