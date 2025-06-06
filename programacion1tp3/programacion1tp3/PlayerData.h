@@ -2,7 +2,6 @@
 
 struct PlayerData
 {
-	//no usar string en binario (para saber el tamaño)
 	static const int MAX_NAME_SIZE = 32;
 	char name[MAX_NAME_SIZE];
 	int currentLevel;
