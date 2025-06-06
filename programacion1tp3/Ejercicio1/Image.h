@@ -9,9 +9,10 @@ private:
 	int actualHeight;
 	char image[MAX_IMAGE_LENGTH];
 	string description;
+	void CalculateDimensions(int actualSize);
 
 public:
-	Image(const char* imageData, string description, int actualWidth, int actualHeight);
+	Image(const char* imageData, string description);
 	~Image();
 	void FillImage(const char* imageData);
 	void Draw();

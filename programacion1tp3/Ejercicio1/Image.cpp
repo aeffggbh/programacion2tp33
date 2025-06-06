@@ -1,10 +1,8 @@
 #include "Image.h"
 #include "AwesomeLibrary.h"
 
-Image::Image(const char* imageData, string description, int actualWidth, int actualHeight)
+Image::Image(const char* imageData, string description)
 {
-	this->actualHeight = actualHeight;
-	this->actualWidth = actualWidth;
 	this->description = description;
 	FillImage(imageData);
 }
@@ -16,25 +14,69 @@ Image::~Image()
 
 void Image::FillImage(const char* imageData)
 {
-	int actualFinish = actualHeight * actualWidth;
+	int actualFinish = 1;
+	int currentChar = 0;
 
-	for (int i = 0; i < actualHeight * actualWidth; i++)
+	bool finished = false;
+
+	do
 	{
-		if (imageData[i] == '\0')
+		if (imageData[currentChar] == '\0')
 		{
-			actualFinish = i;
-			break;
+			finished = true;
 		}
-		image[i] = imageData[i];
-		//cout << image[i];
-	}
+		if (!finished)
+		{
+			image[currentChar] = imageData[currentChar];
+			//cout << image[i];
+			actualFinish++;
+			currentChar++;
+		}
+	} while (!finished);
 
 	for (int i = actualFinish; i < MAX_IMAGE_LENGTH; i++)
 	{
 		image[i] = 'X';
 	}
 
-	//system("pause");
+	CalculateDimensions(actualFinish);
+
+}
+
+void Image::CalculateDimensions(int actualSize)
+{
+	int width = 0;
+	int height = 0;
+
+	bool widthDefined = false;
+
+	for (int i = 0; i < actualSize; i++)
+	{
+		if (image[i] == '\0')
+			break;
+
+		if (!widthDefined)
+			width++;
+
+		if (image[i] == ' ')
+		{
+			if (!widthDefined)
+			{
+				actualWidth = width;
+				widthDefined = true;
+			}
+
+			height++;
+		}
+		else if (image[i] == 'X')
+		{
+			break;
+		}
+	}
+
+	actualHeight = height;
+	if (!widthDefined)
+		actualWidth = width;
 }
 
 void Image::Draw()

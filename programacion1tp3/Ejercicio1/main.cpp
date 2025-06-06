@@ -19,22 +19,21 @@ personaje, objeto, animal o demás representado en la imagen.
 #include "Image.h"
 
 bool IsOver();
-Image* loadImage(int actualWidth, int actualHeight, string description, string path);
+Image* loadImage(string description, string path);
 string GetData(string path);
-//string GetDataAsString(string path);
 
 int main()
 {
-	Image* amogusImage = loadImage(30, 17, "amogus", "amogus.txt");
-	Image* awesomeImage = loadImage(30, 17, "awesome", "awesome.txt");
-	Image* catImage = loadImage(30, 17, "cat", "cat.txt");
-	Image* heartImage = loadImage(32, 17, "heart", "heart.txt");
-	Image* kuromiImage = loadImage(33, 19, "kuromi", "kuromi.txt");
-	Image* OuOImage = loadImage(33, 6, "OuO", "OuO.txt");
-	Image* pizzaImage = loadImage(30, 13, "pizza", "pizza.txt");
-	Image* skellettonImage = loadImage(33, 17, "skelletton", "skelletton.txt");
-	Image* snailImage = loadImage(33, 8, "snail", "snail.txt");
-	Image* uwuImage = loadImage(30, 10, "uwu", "uwu.txt");
+	Image* amogusImage = loadImage("amogus", "amogus.txt");
+	Image* awesomeImage = loadImage("awesome", "awesome.txt");
+	Image* catImage = loadImage("cat", "cat.txt");
+	Image* heartImage = loadImage("heart", "heart.txt");
+	Image* kuromiImage = loadImage("kuromi", "kuromi.txt");
+	Image* OuOImage = loadImage("OuO", "OuO.txt");
+	Image* pizzaImage = loadImage("pizza", "pizza.txt");
+	Image* skellettonImage = loadImage("skelletton", "skelletton.txt");
+	Image* snailImage = loadImage("snail", "snail.txt");
+	Image* uwuImage = loadImage("uwu", "uwu.txt");
 
 	const int maxImages = 10;
 	Image* images[maxImages] =
@@ -63,13 +62,8 @@ int main()
 		{
 			currentImageIndex++;
 			if (currentImageIndex == maxImages)
-			{
 				currentImageIndex = 0;
-			}
-			//clearScreen();
 		}
-
-		//IMAGENES CAMBIAN CON LA TECLA ENTER. MARCO AL REDEDOR. QUE DIGA QUE ES ABAJO	(cat, uwu)
 
 	} while (!IsOver());
 
@@ -84,48 +78,17 @@ bool IsOver()
 	return (getKey(false) == KEY_ESC);
 }
 
-Image* loadImage(int actualWidth, int actualHeight, string description, string path)
+Image* loadImage(string description, string path)
 {
 	string imageData = GetData(path);
 
-	Image* myImage = new Image(imageData.c_str(), description, actualWidth, actualHeight);
+	Image* myImage = new Image(imageData.c_str(), description);
 
 	return myImage;
 }
 
-//string GetDataAsString(string path)
-//{
-//	ifstream inputStream(path);
-//	if (!inputStream.is_open()) {
-//		cerr << "Error: Could not open file " << path << endl;
-//		return "";
-//	}
-//
-//	string content;
-//	string line;
-//	while (getline(inputStream, line)) 
-//		content += line + "\n";
-//
-//	inputStream.close();
-//	return content;
-//}
-
 string GetData(string path)
 {
-	/*int size = actualWidth * actualHeight;
-	string image = new char[size];
-
-	ifstream inputStream = ifstream();
-	inputStream.open(path);
-
-	if (inputStream.good())
-		inputStream.read(image, size);
-
-	if (inputStream.is_open())
-		inputStream.close();
-
-	return image;*/
-
 	string text;
 
 	ifstream inputStream = ifstream();
@@ -142,7 +105,6 @@ string GetData(string path)
 			string addText;
 
 			inputStream >> addText;
-			//cout << addText;
 
 			text += addText + " ";
 		}
@@ -159,8 +121,6 @@ string GetData(string path)
 		if (inputStream.is_open())
 			inputStream.close();
 	}
-
-	//system("pause");
 
 	return text;
 }
