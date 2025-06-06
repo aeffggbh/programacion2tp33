@@ -16,13 +16,25 @@ Image::~Image()
 
 void Image::FillImage(const char* imageData)
 {
+	int actualFinish = actualHeight * actualWidth;
+
 	for (int i = 0; i < actualHeight * actualWidth; i++)
 	{
+		if (imageData[i] == '\0')
+		{
+			actualFinish = i;
+			break;
+		}
 		image[i] = imageData[i];
-		cout << image[i];
+		//cout << image[i];
 	}
 
-	system("pause");
+	for (int i = actualFinish; i < MAX_IMAGE_LENGTH; i++)
+	{
+		image[i] = 'X';
+	}
+
+	//system("pause");
 }
 
 void Image::Draw()
@@ -39,16 +51,27 @@ void Image::Draw()
 
 	for (int y = 0; y < actualHeight; y++)
 	{
-		for (int x = 0; x < actualWidth; x++)
+		for (int i = 0; i < actualWidth; i++)
 		{
-			goToCoordinates(currentX, currentY);
-			cout << image[currentChar];
-			if (image[currentChar] != ' ')
+			if (image[currentChar] != 'X')
+			{
+				goToCoordinates(currentX, currentY);
+				cout << image[currentChar];
 				currentX++;
-			currentChar++;
+				currentChar++;
+
+				if (image[currentChar] == ' ')
+				{
+					currentY++;
+					currentX = 1;
+				}
+			}
+			else
+				break;
 		}
-		currentY++;
-		currentX = 1;
+
+		if (image[currentChar] == 'X')
+			break;
 	}
 
 	currentY += 5;

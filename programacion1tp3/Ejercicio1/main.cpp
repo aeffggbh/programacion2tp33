@@ -26,15 +26,15 @@ string GetData(string path);
 int main()
 {
 	Image* amogusImage = loadImage(30, 17, "amogus", "amogus.txt");
-	Image* awesomeImage = loadImage(29, 17, "awesome", "awesome.txt");
+	Image* awesomeImage = loadImage(30, 17, "awesome", "awesome.txt");
 	Image* catImage = loadImage(30, 17, "cat", "cat.txt");
-	Image* heartImage = loadImage(33, 17, "heart", "heart.txt");
+	Image* heartImage = loadImage(32, 17, "heart", "heart.txt");
 	Image* kuromiImage = loadImage(33, 19, "kuromi", "kuromi.txt");
 	Image* OuOImage = loadImage(33, 6, "OuO", "OuO.txt");
 	Image* pizzaImage = loadImage(30, 13, "pizza", "pizza.txt");
 	Image* skellettonImage = loadImage(33, 17, "skelletton", "skelletton.txt");
 	Image* snailImage = loadImage(33, 8, "snail", "snail.txt");
-	Image* uwuImage = loadImage(30, 9, "uwu", "uwu.txt");
+	Image* uwuImage = loadImage(30, 10, "uwu", "uwu.txt");
 
 	const int maxImages = 10;
 	Image* images[maxImages] =
